@@ -4,6 +4,8 @@ import numpy as np
 
 threshold = 0.99
 DBG = False
+INFO = False
+USING_HILENS = True
 
 
 # softmax
@@ -52,8 +54,10 @@ def preprocess(input_nv21):
     logd(input_rgb)
 
     radius = 240  # 240
-    # img_center = [640, 360]  # 画面(1280x720)中心点
-    img_center = [270, 480]  # 画面(540x960)中心点
+    if USING_HILENS:
+        img_center = [640, 360]  # 画面(1280x720)中心点
+    else:
+        img_center = [270, 480]  # 画面(540x960)中心点
     left_top = [img_center[0] - radius, img_center[1] - radius]
     right_bot = [img_center[0] + radius, img_center[1] + radius]
     logd("00000" + str(left_top) + "," + str(right_bot))
@@ -161,4 +165,5 @@ def logd(content):
 
 
 def logi(content):
-    print(str(content))
+    if INFO:
+        print(str(content))
