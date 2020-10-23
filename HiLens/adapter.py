@@ -1,14 +1,14 @@
-from gpiozero import LED
-from time import sleep
-from sense_hat import SenseHat
 import RPi.GPIO as GPIO
+import time
 
-led = LED(25)
-sense = SenseHat()
-sense.show_message("Hello world!")
+channel = 21 #管脚40，参阅树莓派引脚图，物理引脚40对应的BCM编码为21
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(channel, GPIO.IN)
 
 while True:
-    led.on()
-    sleep(1)
-    led.off()
-    sleep(1)
+        if GPIO.input(channel) == GPIO.LOW:
+                print("土壤检测结果：潮湿")
+        else:
+                print("土壤检测结果：干燥")
+        time.sleep(1)
