@@ -5,18 +5,18 @@ channel = 24  # 管脚40，参阅树莓派引脚图，物理引脚40对应的BCM
 print("PC ON: PC-ON")
 print("Exit: Q and q")
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(channel, GPIO.OUT, initial=GPIO.LOW)
 while True:
     user_choice = input("Choice:")
-    if user_choice == "o":
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(channel, GPIO.OUT, initial=GPIO.LOW)
+    if user_choice == "1":
+        print("on")
         GPIO.output(channel, GPIO.HIGH)
-        print("3")
-        time.sleep(1.0)
-        print("2")
-        time.sleep(1.0)
-        print("1")
-        time.sleep(1.0)
-        GPIO.cleanup()
+        time.sleep(3.0)
+    elif user_choice == "2":
+        print("off")
+        GPIO.output(channel, GPIO.LOW)
+        time.sleep(3.0)
     elif user_choice == "q" or user_choice == "Q":
         GPIO.cleanup()
+GPIO.cleanup()
