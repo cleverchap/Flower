@@ -9,8 +9,8 @@ while True:
     user_choice = input("Choice:")
     if user_choice == "o":
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(channel, GPIO.OUT)
-        GPIO.output(channel, GPIO.LOW)
+        GPIO.setup(channel, GPIO.OUT, initial=GPIO.LOW)
+        GPIO.output(channel, GPIO.HIGH)
         print("3")
         time.sleep(1.0)
         print("2")
