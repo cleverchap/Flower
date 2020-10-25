@@ -8,7 +8,7 @@ if __name__ == '__main__':
     inchannel = 17
     outchannel = 24
     sleepTime = 3
-    GPIO.setmode(GPIO.BMC)
+    GPIO.setmode(GPIO.BCM)
     GPIO.setup(inchannel, GPIO.IN)
     GPIO.setup(outchannel, GPIO.OUT)
     GPIO.output(outchannel, False)
@@ -19,12 +19,16 @@ if __name__ == '__main__':
     # GPIO.cleanup()
     while True:
         user_choice = input("Choice:")
-        print_result_from_sensor()
+        # print_result_from_sensor()
         if user_choice == "1":
             GPIO.output(outchannel, True)
+            print("set " + str(outchannel) + " to True")
             time.sleep(sleepTime)
             GPIO.output(outchannel, False)
         elif user_choice == "2":
+            print("set " + str(outchannel) + " to False")
             GPIO.output(outchannel, False)
             time.sleep(sleepTime)
-        GPIO.cleanup()
+        elif user_choice == "3":
+            break
+    GPIO.cleanup()
