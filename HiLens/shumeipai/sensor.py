@@ -12,3 +12,10 @@ while True:
     else:
         print("土壤检测结果：干燥")
     time.sleep(1)
+
+
+def print_result_from_sensor(_channel):
+    if GPIO.input(_channel) == GPIO.LOW:
+        print("土壤检测结果：潮湿")
+    else:
+        print("土壤检测结果：干燥")

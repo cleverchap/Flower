@@ -18,5 +18,16 @@ while True:
         print("1")
         time.sleep(1.0)
         GPIO.cleanup()
+    elif user_choice == "2":
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(channel, GPIO.OUT)
+        GPIO.output(channel, GPIO.HIGH)
+        print("3")
+        time.sleep(1.0)
+        print("2")
+        time.sleep(1.0)
+        print("1")
+        time.sleep(1.0)
+        GPIO.cleanup()
     elif user_choice == "q" or user_choice == "Q":
         GPIO.cleanup()
