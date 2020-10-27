@@ -22,4 +22,8 @@ http://www.waveshare.net/wiki/BME280_Environmental_Sensor
 BME Python代码：
 https://www.jianshu.com/p/3eeac8b4123b?utm_campaign=hugo
 
+查询温度湿度压强传感器是否在位：
 i2cdetect -y 1
+
+树莓派4B 使用gpio readall无法查询到管脚信息的问题及解决办法
+https://blog.csdn.net/SmartTiger_CSL/article/details/102859831
