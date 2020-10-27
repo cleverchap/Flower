@@ -20,7 +20,7 @@ if __name__ == '__main__':
     # GPIO.cleanup()
     while True:
         user_choice = input("Choice:")
-        print_result_from_sensor()
+        print_result_from_sensor(sensor_channel)
         if user_choice == "1":
             GPIO.output(outchannel, True)
             print("set " + str(outchannel) + " to True")
