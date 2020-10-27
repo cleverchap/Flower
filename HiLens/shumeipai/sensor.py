@@ -1,17 +1,10 @@
 import RPi.GPIO as GPIO
 import time
 
-channel = 17  # 管脚40，参阅树莓派引脚图，物理引脚40对应的BCM编码为21
+from HiLens.shumeipai.settings import sensor_channel
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(channel, GPIO.IN)
-
-# while True:
-#     if GPIO.input(channel) == GPIO.LOW:
-#         print("土壤检测结果：潮湿")
-#     else:
-#         print("土壤检测结果：干燥")
-#     time.sleep(1)
+GPIO.setup(sensor_channel, GPIO.IN)
 
 
 def print_result_from_sensor(_channel):
@@ -19,3 +12,9 @@ def print_result_from_sensor(_channel):
         print("土壤检测结果：潮湿")
     else:
         print("土壤检测结果：干燥")
+
+
+if __name__ == '__main__':
+    while True:
+        print_result_from_sensor(sensor_channel)
+        time.sleep(1)

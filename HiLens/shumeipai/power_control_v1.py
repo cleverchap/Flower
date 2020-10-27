@@ -1,15 +1,17 @@
 import RPi.GPIO as GPIO
 import time
 
+from HiLens.shumeipai.settings import power_channel
+
 print("PC ON: PC-ON")
 print("Exit: Q and q")
 
 while True:
     user_choice = input("Choice:")
-    if user_choice == "PC-ON":
+    if user_choice == "1":
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(25, GPIO.OUT)
-        GPIO.output(25, GPIO.LOW)
+        GPIO.setup(power_channel, GPIO.OUT)
+        GPIO.output(power_channel, GPIO.LOW)
         print("3")
         time.sleep(1.0)
         print("2")

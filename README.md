@@ -15,3 +15,9 @@ https://make.quwj.com/project/78
 
 树莓派实现自动浇花程序
 https://blog.csdn.net/jiaojuan9641/article/details/107510342
+
+BME传感器引脚连接：
+http://www.waveshare.net/wiki/BME280_Environmental_Sensor
+
+BME Python代码：
+https://www.jianshu.com/p/3eeac8b4123b?utm_campaign=hugo
