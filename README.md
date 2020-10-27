@@ -21,3 +21,5 @@ http://www.waveshare.net/wiki/BME280_Environmental_Sensor
 
 BME Python代码：
 https://www.jianshu.com/p/3eeac8b4123b?utm_campaign=hugo
+
+i2cdetect -y 1

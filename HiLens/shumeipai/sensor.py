@@ -1,10 +1,18 @@
 import RPi.GPIO as GPIO
 import time
 
+<<<<<<< Updated upstream
 from HiLens.shumeipai.settings import sensor_channel
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(sensor_channel, GPIO.IN)
+=======
+channel = 18  # 管脚40，参阅树莓派引脚图，物理引脚40对应的BCM编码为21
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(channel, GPIO.IN)
+
+>>>>>>> Stashed changes
 
 
 def print_result_from_sensor(_channel):
