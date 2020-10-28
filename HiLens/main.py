@@ -5,13 +5,13 @@
 import os
 import cv2
 import hilens
+import _thread
 
 from HiLens.server import start_listen
 from HiLens.utils import load_assets
 from HiLens.utils import preprocess
 from HiLens.utils import process_predict_result
 from HiLens.utils import logd, logi
-
 
 net_size = 224
 
@@ -74,5 +74,9 @@ def run(work_path):
 
 
 if __name__ == "__main__":
-    run(os.getcwd())
-    start_listen()
+    # 创建两个线程
+    try:
+        _thread.start_new_thread(run, (os.getcwd(),))
+        _thread.start_new_thread(start_listen, ())
+    except:
+        print("Error: 无法启动线程")

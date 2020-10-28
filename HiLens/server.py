@@ -1,4 +1,4 @@
-from socket import *
+from socket import gethostbyname, gethostname, socket, AF_INET, SOCK_STREAM
 from time import ctime
 
 from HiLens.utils import set_temperature_and_humidity
@@ -45,4 +45,5 @@ def start_listen():
 
 
 if __name__ == '__main__':
+    start_listen()
     start_listen()
