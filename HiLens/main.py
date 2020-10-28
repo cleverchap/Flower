@@ -5,6 +5,8 @@
 import os
 import cv2
 import hilens
+
+from HiLens.server import start_listen
 from HiLens.utils import load_assets
 from HiLens.utils import preprocess
 from HiLens.utils import process_predict_result
@@ -73,3 +75,4 @@ def run(work_path):
 
 if __name__ == "__main__":
     run(os.getcwd())
+    start_listen()
