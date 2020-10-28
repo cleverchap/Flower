@@ -1,7 +1,8 @@
 from socket import *
 from time import *
 
-from HiLens.shumeipai.bme280 import main0
+from HiLens.shumeipai.bme280 import get_temp_pressure_humidity_from_sensor
+from HiLens.shumeipai.sensor import get_result_from_sensor
 
 HOST = '192.168.43.236'  # or 'localhost'
 PORT = 21567
@@ -11,11 +12,13 @@ ADDR = (HOST, PORT)
 tcpCliSock = socket(AF_INET, SOCK_STREAM)
 tcpCliSock.connect(ADDR)
 while True:
-    sleep(1)
+    sleep(10)
     # data1 = input('>')
-    t1, t2, temperature, pressure, humidity = main0()
-    data1 = ("Temperature : %d C, Pressure : %d hPa, Humidity : %d RH" % (temperature, pressure, humidity))
+    t1, t2, temperature, pressure, humidity = get_temp_pressure_humidity_from_sensor()
+    dry_or_humid = get_result_from_sensor()
+    # data1 = ("Temperature : %f C, Pressure : %f hPa, Humidity : %f RH" % (temperature, pressure, humidity))
     # data = str(data)
+    data1 = ("%f,%f,%f,%s" % (temperature, pressure, humidity, dry_or_humid))
     if not data1:
         break
     tcpCliSock.send(data1.encode())
