@@ -16,9 +16,9 @@ def print_result_from_sensor(_channel):
 
 def get_result_from_sensor(_channel):
     if GPIO.input(_channel) == GPIO.LOW:
-        return "Dry"
-    else:
         return "Humid"
+    else:
+        return "Dry"
 
 
 if __name__ == '__main__':

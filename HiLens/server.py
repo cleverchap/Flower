@@ -1,6 +1,8 @@
 from socket import *
 from time import ctime
 
+from HiLens.utils import set_temperature_and_humidity
+
 HOST = ''
 PORT = 21567
 BUFSIZ = 1024
@@ -24,6 +26,17 @@ def start_listen():
                 data = tcpCliSock.recv(BUFSIZ)
                 if not data:
                     break
+                print(data)
+                if len(data) < 3:
+                    break
+                str_data = str(data)[2:-1]
+                print(str_data)
+                print(str((str(str_data)).split(',')))
+                split_data = str_data.split(',')
+                if len(data) < 4:
+                    break
+                set_temperature_and_humidity(split_data[0], split_data[1], split_data[2], split_data[3])
+
                 # tcpCliSock.send('[%s] %s' %(bytes(ctime(),'utf-8'),data))
                 tcpCliSock.send(('[%s] %s' % (ctime(), data)).encode())
             tcpCliSock.close()

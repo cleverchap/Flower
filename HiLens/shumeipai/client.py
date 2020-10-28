@@ -13,7 +13,7 @@ ADDR = (HOST, PORT)
 tcpCliSock = socket(AF_INET, SOCK_STREAM)
 tcpCliSock.connect(ADDR)
 while True:
-    sleep(10)
+    sleep(3)
     # data1 = input('>')
     t1, t2, temperature, pressure, humidity = get_temp_pressure_humidity_from_sensor()
     dry_or_humid = get_result_from_sensor(sensor_channel)

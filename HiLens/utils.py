@@ -7,6 +7,11 @@ DBG = False
 INFO = False
 USING_HILENS = True
 
+current_temp = 0.0
+current_humidity = 0.0
+current_pressure = 0.0
+current_dry_or_humid = False
+
 
 # softmax
 def softmax(x):
@@ -156,7 +161,15 @@ def get_english_flower_name_by_index(index):
 
 
 def get_temperature_and_humidity_from_sensor():
-    return 0, 0
+    return current_temp, current_humidity
+
+
+def set_temperature_and_humidity(temp, humid, pressure, dry_or_humid):
+    global current_pressure, current_temp, current_humidity, current_dry_or_humid
+    current_temp = temp
+    current_humidity = humid
+    current_pressure = pressure
+    current_dry_or_humid = dry_or_humid
 
 
 def logd(content):

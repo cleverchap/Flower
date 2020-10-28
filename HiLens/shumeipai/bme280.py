@@ -164,18 +164,20 @@ def readBME280All(addr=DEVICE):
     return temperature / 100.0, pressure / 100.0, humidity
 
 
-def get_temp_pressure_humidity_from_sensor():
+def get_temp_pressure_humidity_from_sensor(is_print=False):
     (chip_id, chip_version) = readBME280ID()
-    print("Chip ID     :", chip_id)
-    print("Version     :", chip_version)
+    if is_print:
+        print("Chip ID     :", chip_id)
+        print("Version     :", chip_version)
 
     temperature, pressure, humidity = readBME280All()
 
-    print("Temperature : ", temperature, "C")
-    print("Pressure : ", pressure, "hPa")
-    print("Humidity : ", humidity, "%")
+    if is_print:
+        print("Temperature : ", temperature, "C")
+        print("Pressure : ", pressure, "hPa")
+        print("Humidity : ", humidity, "%")
     return chip_id, chip_version, temperature, pressure, humidity
 
 
 if __name__ == "__main__":
-    get_temp_pressure_humidity_from_sensor()
+    get_temp_pressure_humidity_from_sensor(is_print=True)
