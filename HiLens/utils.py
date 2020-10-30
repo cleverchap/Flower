@@ -108,7 +108,7 @@ def process_predict_result(outputs, input_rgb):
 
     logd("before" + str(input_rgb))
     cv2.putText(input_rgb, text, (50, 50), font, font_scale, (255, 0, 0), thickness)
-    temp, humi, hpa, dry_or_humid = get_temperature_and_humidity_from_sensor()
+    temp, hpa, humi, dry_or_humid = get_temperature_and_humidity_from_sensor()
     string = "%s C, %s RH, %s hPa, %s" % (temp, humi, hpa, dry_or_humid)
     cv2.putText(input_rgb, string, (50, 100), font, font_scale, (255, 0, 0), thickness)
     logi(string)
