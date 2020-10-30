@@ -19,6 +19,7 @@ net_size = 224
 def run_inner(work_path):
     # 系统初始化，参数要与创建技能时填写的检验值保持一致
     hilens.init("heart")
+    hilens.error("run !!!!!!!!!! " + work_path)
 
     # 初始化摄像头与显示器
     camera = hilens.VideoCapture()
@@ -69,19 +70,22 @@ def run_inner(work_path):
             logd(input_rgb)
             output_nv21 = hilens.cvt_color(input_rgb, hilens.RGB2YUV_NV21)
             display.show(output_nv21)
-        except Exception:
+        except Exception as e:
+            print(e)
             break
 
 
 def run(work_space):
+    hilens.error("start!!!!!!!!!!!!!!")
     # 创建两个线程
     try:
-        _thread.start_new_thread(run_inner, (work_space,))
+        _thread.start_new_thread(run_inner, (os.getcwd(),))
         _thread.start_new_thread(start_listen, ())
     except:
         print("Error: 无法启动线程")
     while 1:
         pass
+    hilens.error("end!!!!!!!!!!!!!!")
 
 
 if __name__ == '__main__':

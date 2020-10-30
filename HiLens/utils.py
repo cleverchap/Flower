@@ -108,8 +108,8 @@ def process_predict_result(outputs, input_rgb):
 
     logd("before" + str(input_rgb))
     cv2.putText(input_rgb, text, (50, 50), font, font_scale, (255, 0, 0), thickness)
-    temp, humi = get_temperature_and_humidity_from_sensor()
-    string = "%d C, %d RH" % (temp, humi)
+    temp, humi, hpa, dry_or_humid = get_temperature_and_humidity_from_sensor()
+    string = "%s C, %s RH, %s hPa, %s" % (temp, humi, hpa, dry_or_humid)
     cv2.putText(input_rgb, string, (50, 100), font, font_scale, (255, 0, 0), thickness)
     logi(string)
     logd("after" + str(input_rgb))
@@ -161,7 +161,7 @@ def get_english_flower_name_by_index(index):
 
 
 def get_temperature_and_humidity_from_sensor():
-    return current_temp, current_humidity
+    return current_temp, current_humidity, current_pressure, current_dry_or_humid
 
 
 def set_temperature_and_humidity(temp, humid, pressure, dry_or_humid):

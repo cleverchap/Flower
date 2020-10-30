@@ -20,7 +20,7 @@ while True:
     dry_or_humid = get_result_from_sensor(sensor_channel)
     # data1 = ("Temperature : %f C, Pressure : %f hPa, Humidity : %f RH" % (temperature, pressure, humidity))
     # data = str(data)
-    data1 = ("%f,%f,%f,%s" % (temperature, pressure, humidity, dry_or_humid))
+    data1 = ("%.2f,%.2f,%.2f,%s" % (temperature, pressure, humidity, dry_or_humid))
     if not data1:
         break
     tcpCliSock.send(data1.encode())

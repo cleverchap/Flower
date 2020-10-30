@@ -10,10 +10,12 @@ ADDR = (HOST, PORT)
 
 
 def start_listen():
+    print("start listen !!!!!!!!!!!!!!!!!!!!!!")
     myname = gethostname()
     print(myname)
     myaddr = gethostbyname(myname)
     print(myname + ", " + myaddr)
+    print("start listen !!!!!!!!!!!!!!!!!!!!!! now !!!!!")
     tcpSerSock = socket(AF_INET, SOCK_STREAM)
     tcpSerSock.bind(ADDR)
     tcpSerSock.listen(5)
@@ -46,5 +48,4 @@ def start_listen():
 
 
 if __name__ == '__main__':
-    start_listen()
     start_listen()
