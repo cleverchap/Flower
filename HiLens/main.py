@@ -16,7 +16,7 @@ from HiLens.utils import logd, logi
 net_size = 224
 
 
-def run(work_path):
+def run_inner(work_path):
     # 系统初始化，参数要与创建技能时填写的检验值保持一致
     hilens.init("heart")
 
@@ -73,10 +73,16 @@ def run(work_path):
             break
 
 
-if __name__ == "__main__":
+def run(work_space):
     # 创建两个线程
     try:
-        _thread.start_new_thread(run, (os.getcwd(),))
+        _thread.start_new_thread(run_inner, (work_space,))
         _thread.start_new_thread(start_listen, ())
     except:
         print("Error: 无法启动线程")
+    while 1:
+        pass
+
+
+if __name__ == '__main__':
+    run(work_space=os.getcwd())

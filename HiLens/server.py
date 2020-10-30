@@ -1,7 +1,7 @@
 from socket import gethostbyname, gethostname, socket, AF_INET, SOCK_STREAM
 from time import ctime
 
-from HiLens.utils import set_temperature_and_humidity
+from HiLens.utils import set_temperature_and_humidity, logi
 
 HOST = ''
 PORT = 21567
@@ -11,6 +11,7 @@ ADDR = (HOST, PORT)
 
 def start_listen():
     myname = gethostname()
+    print(myname)
     myaddr = gethostbyname(myname)
     print(myname + ", " + myaddr)
     tcpSerSock = socket(AF_INET, SOCK_STREAM)
@@ -26,12 +27,12 @@ def start_listen():
                 data = tcpCliSock.recv(BUFSIZ)
                 if not data:
                     break
-                print(data)
+                logi(data)
                 if len(data) < 3:
                     break
                 str_data = str(data)[2:-1]
-                print(str_data)
-                print(str((str(str_data)).split(',')))
+                logi(str_data)
+                logi(str((str(str_data)).split(',')))
                 split_data = str_data.split(',')
                 if len(data) < 4:
                     break
