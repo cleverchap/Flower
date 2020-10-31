@@ -1,7 +1,7 @@
 from socket import gethostbyname, gethostname, socket, AF_INET, SOCK_STREAM
-from time import ctime
+from time import ctime, time
 
-from HiLens.utils import set_temperature_and_humidity, logi
+from HiLens.utils import set_temperature_and_humidity, logi, get_command
 
 HOST = ''
 PORT = 21567
@@ -36,12 +36,19 @@ def start_listen():
                 logi(str_data)
                 logi(str((str(str_data)).split(',')))
                 split_data = str_data.split(',')
-                if len(data) < 4:
+                if len(split_data) < 4:
                     break
-                set_temperature_and_humidity(split_data[0], split_data[1], split_data[2], split_data[3])
-
+                if len(split_data) >= 5:
+                    set_temperature_and_humidity(split_data[0], split_data[1], split_data[2], split_data[3],
+                                                 split_data[4])
+                else:
+                    set_temperature_and_humidity(split_data[0], split_data[1], split_data[2], split_data[3])
                 # tcpCliSock.send('[%s] %s' %(bytes(ctime(),'utf-8'),data))
-                tcpCliSock.send(('[%s] %s' % (ctime(), data)).encode())
+                command = get_command(time())
+                if command is not None:
+                    tcpCliSock.send(('%s' % command).encode())
+                else:
+                    tcpCliSock.send(('[%s] %s' % (ctime(), data)).encode())
             tcpCliSock.close()
     finally:
         tcpSerSock.close()

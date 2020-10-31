@@ -6,11 +6,14 @@ threshold = 0.99
 DBG = False
 INFO = False
 USING_HILENS = True
+IS_DEMO = True
 
-current_temp = 0.0
-current_humidity = 0.0
-current_pressure = 0.0
-current_dry_or_humid = False
+current_temp = ""
+current_humidity = ""
+current_pressure = ""
+current_dry_or_humid = ""
+current_illumination = ""
+last_watering_time = 0
 
 
 # softmax
@@ -161,15 +164,71 @@ def get_english_flower_name_by_index(index):
 
 
 def get_temperature_and_humidity_from_sensor():
-    return current_temp, current_humidity, current_pressure, current_dry_or_humid
+    return current_temp, current_pressure, current_humidity, current_dry_or_humid
 
 
-def set_temperature_and_humidity(temp, humid, pressure, dry_or_humid):
-    global current_pressure, current_temp, current_humidity, current_dry_or_humid
+def set_temperature_and_humidity(temp, pressure, humid, dry_or_humid, illumination=""):
+    global current_pressure, current_temp, current_humidity, current_dry_or_humid, current_illumination
     current_temp = temp
-    current_humidity = humid
     current_pressure = pressure
+    current_humidity = humid
     current_dry_or_humid = dry_or_humid
+    current_illumination = illumination
+
+
+def get_command(current_time):
+    global last_watering_time
+    print(current_time)
+    print(last_watering_time)
+    print(current_time - last_watering_time)
+    print(current_dry_or_humid)
+    if last_watering_time == 0:
+        print("first time, return")
+        last_watering_time = current_time
+        return None
+    # 60 = 1min; 3600 = 1h(Dry); 10800 = 3h(Humid)
+    # 根据土壤干湿度决定是否浇花
+    waiting_time = 3600
+    if current_dry_or_humid == "Humid":
+        waiting_time *= 3  # 10800
+    if IS_DEMO:
+        waiting_time /= 200  # 18s for dry or 54s for humid
+    if current_time - last_watering_time > waiting_time:
+        last_watering_time = current_time
+        return "Watering" + str(get_prinkling_norm())
+    return None
+
+
+def get_prinkling_norm():
+    base = 1.0
+    # 根据光照调整浇水量
+    try:
+        if float(current_illumination) > 2000:
+            base *= 3
+        elif float(current_illumination) > 1500:
+            base *= 2
+        elif 500 > float(current_illumination) > 0:
+            base *= 0.8
+    except ValueError:
+        print("value error for illumination: " + current_illumination)
+    # 根据空气温度调整浇水量
+    if float(current_temp) > 30:
+        base *= 3.2
+    elif float(current_temp) > 25:
+        base *= 1.6
+    elif float(current_temp) < 5:
+        base *= 0.4
+    # 根据空气湿度调整浇水量
+    if float(current_humidity) < 10:
+        base *= 2.4
+    elif float(current_humidity) < 20:
+        base *= 1.2
+    elif float(current_humidity) > 60:
+        base *= 0.8
+    # MAX is 23.04; MIN is 0.256
+    base = min(base, 5)
+    base = max(base, 0.5)
+    return base * 3
 
 
 def logd(content):

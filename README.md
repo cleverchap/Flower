@@ -1,6 +1,19 @@
 代码下载：
 https://github.com/cleverchap/Flower.git
 
+查看有同一局域网内有哪些IP
+arp -a
+
+OSError: [Errno 48] Address already in use
+解决办法：前者很简单，杀死进程．后者更简单把正在run的项目停掉．
+lsof -i :5000 # 这个命令针对我用的port 5000
+
+如果是查看本机所有的进行的进程：
+ps aux　 #　用ps -A查看所有进程
+
+杀死进程：
+kill -9 PID # PID是进程号,查看进程时会显示，比如23645
+
 树莓派云灌溉系统的实现
 https://github.com/sogeisetsu/shumeipai
 
