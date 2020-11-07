@@ -30,6 +30,7 @@ while True:
     if not data1:
         break
     command = data1.decode('utf-8')
+    print(command)
     if command.startswith("Watering"):
         time = command[8:]
         print(time)

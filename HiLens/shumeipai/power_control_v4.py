@@ -15,6 +15,7 @@ def blink():
 
 
 def blink(times):
+    print("start blink:" + str(times))
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(power_channel, GPIO.OUT, initial=GPIO.LOW)
     GPIO.output(power_channel, GPIO.HIGH)
@@ -22,6 +23,7 @@ def blink(times):
     GPIO.output(power_channel, GPIO.LOW)
     time.sleep(1)
     GPIO.cleanup()
+    print("end blink:" + str(times))
 
 
 if __name__ == '__main__':
