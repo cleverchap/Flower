@@ -2,11 +2,13 @@ from socket import *
 from time import *
 
 from HiLens.shumeipai.bme280 import get_temp_pressure_humidity_from_sensor
+from HiLens.shumeipai.power_control_v4 import blink
 from HiLens.shumeipai.sensor import get_result_from_sensor
 from HiLens.shumeipai.settings import sensor_channel
 
-HOST = '192.168.0.102'  # HOME Hilens
-# HOST = '192.168.43.236'  # Mate 20 Pro
+# HOST = '192.168.0.102'  # HOME Hilens
+HOST = '192.168.43.236'  # Mate 20 Pro PC
+# HOST = '192.168.43.35'  # Mate 20 Pro HiLens
 PORT = 21567
 BUFSIZ = 1024
 ADDR = (HOST, PORT)
@@ -27,5 +29,9 @@ while True:
     data1 = tcpCliSock.recv(BUFSIZ)
     if not data1:
         break
-    print(data1.decode('utf-8'))
+    command = data1.decode('utf-8')
+    if command.startswith("Watering"):
+        time = command[8:]
+        print(time)
+        blink(time)
 tcpCliSock.close()
