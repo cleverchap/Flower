@@ -15,6 +15,8 @@ def print_result_from_sensor(_channel):
 
 
 def get_result_from_sensor(_channel):
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(_channel, GPIO.IN)
     if GPIO.input(_channel) == GPIO.LOW:
         return "Humid"
     else:

@@ -192,7 +192,7 @@ def get_command(current_time):
     if current_dry_or_humid == "Humid":
         waiting_time *= 3  # 10800
     if IS_DEMO:
-        waiting_time /= 200  # 18s for dry or 54s for humid
+        waiting_time /= 300  # 18s for dry or 54s for humid
     if current_time - last_watering_time > waiting_time:
         last_watering_time = current_time
         return "Watering" + str(get_prinkling_norm())

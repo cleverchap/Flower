@@ -33,5 +33,5 @@ while True:
     if command.startswith("Watering"):
         time = command[8:]
         print(time)
-        blink(time)
+        blink(int(float(time)))
 tcpCliSock.close()
