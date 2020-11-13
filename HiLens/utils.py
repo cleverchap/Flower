@@ -228,7 +228,7 @@ def get_prinkling_norm():
     # MAX is 23.04; MIN is 0.256
     base = min(base, 5)
     base = max(base, 0.5)
-    return base * 3
+    return base * 5
 
 
 def logd(content):
