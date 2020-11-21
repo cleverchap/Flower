@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-from HiLens.shumeipai.settings import sensor_channel
+from shumeipai.settings import sensor_channel
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(sensor_channel, GPIO.IN)

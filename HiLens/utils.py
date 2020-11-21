@@ -1,8 +1,6 @@
-import os
 import cv2
 import numpy as np
 
-threshold = 0.99
 DBG = False
 INFO = False
 USING_HILENS = True
@@ -58,8 +56,6 @@ def blur(img_data, left_top, right_bot, k):
 # 对输入图像进行预处理——画框、截图
 def preprocess(input_nv21):
     input_rgb = cv2.cvtColor(input_nv21, cv2.COLOR_YUV2RGB_NV21)
-    logd("input_rgb")
-    logd(input_rgb)
 
     radius = 240  # 240
     if USING_HILENS:
@@ -68,33 +64,18 @@ def preprocess(input_nv21):
         img_center = [270, 480]  # 画面(540x960)中心点
     left_top = [img_center[0] - radius, img_center[1] - radius]
     right_bot = [img_center[0] + radius, img_center[1] + radius]
-    logd("00000" + str(left_top) + "," + str(right_bot))
 
     line_len = 40
     color = (255, 255, 255)
     kernel_size = 20
-    logd("1111111")
     draw_square(input_rgb, left_top, right_bot, line_len, color)
-    logd("222222")
     blur(input_rgb, left_top, right_bot, kernel_size)
-    logd("333333")
 
-    # 截取出一个正方形区域作为手势识别输入
+    # 截取出一个正方形区域作为识别区域
     gesture_area = input_rgb[img_center[1] - radius: img_center[1] + radius,
                    img_center[0] - radius: img_center[0] + radius,
                    :]
     return input_rgb, gesture_area
-
-
-# 加载资源图像——透明心形图与封面图
-def load_assets(work_path):
-    img_heart = cv2.imread(os.path.join(work_path, 'test/heart.png'))
-    img_heart = cv2.cvtColor(img_heart, cv2.COLOR_BGR2RGB)
-
-    img_cover = cv2.imread(os.path.join(work_path, 'test/cover.jpg'))
-    img_cover = cv2.cvtColor(img_cover, cv2.COLOR_BGR2RGB)
-    img_cover = cv2.resize(img_cover, (1280, 720))
-    return img_heart, img_cover
 
 
 # 输出分类结果、温湿度、及其他处理结果
@@ -117,38 +98,6 @@ def process_predict_result(outputs, input_rgb):
     logi(string)
     logd("after" + str(input_rgb))
     return max_inx
-
-
-# 结果展示——若检测到心形手势显示简单的动画特效
-def show_result(index, input_rgb, outputs, img_heart, img_cover):
-    predict = softmax(outputs[0])
-    max_inx = np.argmax(predict)
-    img_heart_flip = cv2.flip(img_heart, 1)
-    h_heart, w_heart, _ = img_heart.shape
-    h_input, w_input, _ = input_rgb.shape
-
-    font_scale = 2
-    thickness = 2
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    if max_inx == 2 and predict[max_inx] > threshold:
-        index += 1
-        y = h_input - h_heart - index * 3
-        if y <= 0:
-            y = 0
-            input_rgb = img_cover
-        else:
-            input_rgb[y:y + h_heart, 128:128 + w_heart, :] = \
-                cv2.addWeighted(input_rgb[y:y + h_heart, 128:128 + w_heart, :],
-                                1, img_heart_flip, 0.5, 0)
-            input_rgb[y:y + h_heart, 128 + w_heart:128 + 2 * w_heart, :] = \
-                cv2.addWeighted(input_rgb[y:y + h_heart,
-                                128 + w_heart:128 + 2 * w_heart,
-                                :],
-                                1, img_heart, 0.5, 0)
-            cv2.putText(input_rgb, 'Heart', (550, 100), font, font_scale, (255, 0, 0), thickness)
-    else:
-        index = 0
-    return index, input_rgb
 
 
 def get_chinese_flower_name_by_index(index):
@@ -178,10 +127,6 @@ def set_temperature_and_humidity(temp, pressure, humid, dry_or_humid, illuminati
 
 def get_command(current_time):
     global last_watering_time
-    print(current_time)
-    print(last_watering_time)
-    print(current_time - last_watering_time)
-    print(current_dry_or_humid)
     if last_watering_time == 0:
         print("first time, return")
         last_watering_time = current_time
