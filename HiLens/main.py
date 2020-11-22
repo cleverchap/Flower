@@ -46,11 +46,11 @@ def run_inner(work_path):
             break
 
 
-def run():
+def run(work_space):
     hilens.error("start!!!!!!!!!!!!!!")
     # 创建两个线程
     try:
-        _thread.start_new_thread(run_inner, (os.getcwd(),))
+        _thread.start_new_thread(run_inner, (work_space,))
         _thread.start_new_thread(start_listen, ())
     except:
         print("Error: 无法启动线程")
@@ -60,4 +60,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    run(os.getcwd())
