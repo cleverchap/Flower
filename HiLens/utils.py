@@ -80,19 +80,23 @@ def preprocess(input_nv21):
 
 # 输出分类结果、温湿度、及其他处理结果
 def process_predict_result(outputs, input_rgb):
+    # 预测结果
     predict = softmax(outputs[0])
+    # 得到花的种类
     max_inx = np.argmax(predict)
     logi(max_inx)
+    # 得到花的名称
     text = get_english_flower_name_by_index(max_inx)
     logi(text)
     # 绘制结果
     font = cv2.FONT_HERSHEY_SIMPLEX
     font_scale = 2
     thickness = 2
-
     logd("before" + str(input_rgb))
+    # 花的种类显示在屏幕左上角
     cv2.putText(input_rgb, text, (50, 50), font, font_scale, (255, 0, 0), thickness)
     temp, hpa, humi, dry_or_humid = get_temperature_and_humidity_from_sensor()
+    # 当前温度、湿度显示在种类下面
     string = "%s C, %s RH, %s hPa, %s" % (temp, humi, hpa, dry_or_humid)
     cv2.putText(input_rgb, string, (50, 100), font, font_scale, (255, 0, 0), thickness)
     logi(string)

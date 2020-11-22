@@ -38,7 +38,7 @@ def run_inner(work_path):
             outputs = cls_model.infer([input_resized.flatten()])
 
             # 2.4 结果展示
-            index = process_predict_result(outputs, input_rgb)
+            process_predict_result(outputs, input_rgb)
             output_nv21 = hilens.cvt_color(input_rgb, hilens.RGB2YUV_NV21)
             display.show(output_nv21)
         except Exception as e:
