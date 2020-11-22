@@ -2,7 +2,7 @@
 
 ## 整体原理
 
-![image-20201122112242854](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122112206604.png)
+![image-20201122112242854](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122112206604.png)
 
 - 温度传感器 + 湿度传感器 + 土壤传感器 = 决定是否浇水
 - 继电器 + 水泵 = 控制浇水
@@ -24,65 +24,65 @@
 
 2. 上传到OBS上。这里我是用**OBS Brower +**上传的，详见：https://support.huaweicloud.com/browsertg-obs/obs_03_1003.html
 
-   ![image-20201122115205144](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122115205144.png)
+   ![image-20201122115205144](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122115205144.png)
 
 3. 进入**ModelArts-北京四**控制台，点击**数据管理** - **数据集** - **创建数据集**
 
-   ![image-20201122114400448](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122114400448.png)
+   ![image-20201122114400448](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122114400448.png)
 
 4. 名称自定义，标注场景选择**图片**，标注类型选择**图像分类**，输入OBS的**输入位置**与**输出位置**，点击创建。
 
    > 注意这里数据集输入位置，放一个空文件夹（/empty），不要放上一步导入的文件夹（/input）。
 
-   ![image-20201122115707242](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122115707242.png)
+   ![image-20201122115707242](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122115707242.png)
 
 5. 回到数据集管理界面，进入刚创建的数据集，点击右上角的**导入**，选择从OBS导入。这样导入的数据就是自动标注的了。
 
-   ![image-20201122115903496](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122115903496.png)
+   ![image-20201122115903496](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122115903496.png)
 
 6. 标注进行中：
 
-   ![image-20201122120013534](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122120013534.png)
+   ![image-20201122120013534](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122120013534.png)
 
 7. 标注完成，记得点击**发布**按钮，否则一会训练的时候找不到：
 
-   ![image-20201122155257030](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122155257030.png)
+   ![image-20201122155257030](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122155257030.png)
 
 8. 进入AI市场：
 
-   ![image-20201122114227297](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122114227297.png)
+   ![image-20201122114227297](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122114227297.png)
 
 9. 找到**图像分类**-**ResNet_V1_50**，点击订阅：
 
-   ![image-20201122155402840](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122155402840.png)
+   ![image-20201122155402840](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122155402840.png)
 
 10. 订阅后进入控制台，点击**创建训练作业**：
 
-   ![image-20201122155554424](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122155554424.png)
+   ![image-20201122155554424](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122155554424.png)
 
 11. 选择数据来源，选择刚创建的数据集；模型输出地址选择一个空白的文件夹即可；资源池选个免费的就行：
 
-    ![image-20201122160319034](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122160319034.png)
+    ![image-20201122160319034](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122160319034.png)
 
 12. 点击下一步，提交即可。等待一段时间。
 
-    ![image-20201122160442368](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122160442368.png)
+    ![image-20201122160442368](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122160442368.png)
 
 13. 可以看到训练速度非常的快，3分多钟就训练好了：
 
-    ![image-20201122161827798](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122161827798.png)
+    ![image-20201122161827798](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122161827798.png)
 
 14. 接下来进入到ModelArts控制台，点击模型管理，压缩/转换，新建任务：
 
-    ![image-20201122162229880](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122162229880.png)
+    ![image-20201122162229880](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122162229880.png)
 
 15. 转换输入目录选择11.中**指定的目录/frozen_graph/**，输出目录指定一个新的空目录，输入框架选择**TensorFlow**，输出框架选择**MindSpore**，转换模板选择**TF-FrozenGraph-To-Ascend-HiLens**，输入张量形状 **images:1,224,224,3**，转换输出节点  **logits:0**。详见下图：
 
-    ![image-20201122163417914](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122163417914.png)
+    ![image-20201122163417914](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122163417914.png)
 
 16. 进入HiLens控制台，**技能开发** - 模型管理，点击右上角的**导入（转换）模型**。选择刚才转换后的模型。
 
-    ![image-20201122164230902](/Users/clevercong/OneDrive/11、树莓派/PIC/image-20201122164230902.png)
+    ![image-20201122164230902](https://github.com/cleverchap/Flower/blob/main/pic/chapter1/image-20201122164230902.png)
 
 17. 接下来就可以使用这个模型了。具体如何在HiLens中使用，稍后继续讲解。
 
@@ -94,7 +94,7 @@
 
 这里我是把BME280连接到了物理引脚1、3、5、9。**土壤湿度传感器DO口**连接到了物理引脚12（BCM编码18，代码`shumeipai/settings.py/sensor_channel=18`），**继电器IN口**连接到了物理引脚18（BCM编码24，代码`shumeipai/settings.py/power_channel=24`），**继电器COM端**连接**水泵正极**，**继电器NO端**连接**单独供电电源的正极**（防止电压不足），**继电器VCC端**连接3.3V（物理引脚17），**水泵负极**接**单独供电电源的负极**。其他正常接地、接电源即可。
 
-![image-20201122173258026](/Users/clevercong/OneDrive/11、树莓派/PIC/chapter2/image-20201122173258026.png)
+![image-20201122173258026](https://github.com/cleverchap/Flower/blob/main/pic/chapter2/image-20201122173258026.png)
 
 ### 土壤干湿度数据采集
 
@@ -120,7 +120,7 @@
 
 1. 首先进入HiLens控制台，点击左侧**技能开发** - **HiLens Studio(Beta**)。
 
-![image-20201122194121874](/Users/clevercong/OneDrive/11、树莓派/PIC/chapter3/image-20201122194121874.png)
+![image-20201122194121874](https://github.com/cleverchap/Flower/blob/main/pic/chapter3/image-20201122194121874.png)
 
 2. 创建一个新的工程，可以选择一个已有的技能模板二次开发，这里我们选择了**Heart_Shape_Detection**。
 
@@ -128,7 +128,7 @@
 
 4. 第一步我们先把加载的模型换掉。`HiLens Studio`模型文件放在`/model`下面。我们先把之前训练的模型上传。
 
-   ![image-20201122194830852](/Users/clevercong/OneDrive/11、树莓派/PIC/chapter3/image-20201122194830852.png)
+   ![image-20201122194830852](https://github.com/cleverchap/Flower/blob/main/pic/chapter3/image-20201122194830852.png)
 
 5. 第二步把代码里加载模型的地方，修改成我们自己的模型的名字：
 
@@ -164,11 +164,11 @@
 
 7. `HiLens Studio`提供了在线`Debug`的方式，不依赖`HiLens`硬件。但是和树莓派通信。前期调试`HiLens`识别花的种类的代码的时候，可以试试这个`Debug`功能。
 
-   ![image-20201122200334816](/Users/clevercong/OneDrive/11、树莓派/PIC/chapter3/image-20201122200334816.png)
+   ![image-20201122200334816](https://github.com/cleverchap/Flower/blob/main/pic/chapter3/image-20201122200334816.png)
 
    这里预置了一小段视频，在`/test`文件夹下，文件名固定为`camera0.mp4`。预置的这个视频不能满足我们调试花种类判断的诉求。因此我们需要录一小段（10s）左右的视频，然后上传到这里，名字改成一样的。
 
-   ![image-20201122200519731](/Users/clevercong/OneDrive/11、树莓派/PIC/chapter3/image-20201122200519731.png)
+   ![image-20201122200519731](https://github.com/cleverchap/Flower/blob/main/pic/chapter3/image-20201122200519731.png)
 
    但是执行代码，并不会成功。因为原视频是`1280x720`的，我用手机录的是`540x960`的，中心点不一样。需要修改`preprocess()`函数。相关代码如下：
 
